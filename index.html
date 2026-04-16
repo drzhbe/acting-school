@@ -60,101 +60,34 @@
   <body>
     <div class="grain"></div>
 
-    <header class="hero section">
-      <nav class="nav">
-        <div class="brand">ButterTapes, Acting Classes</div>
-        <a class="nav-link" href="#apply">Leave your email</a>
-      </nav>
+    <header class="hero">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="images/screen-1.jpeg"
+      >
+        <source src="video/buttertapes-screen-class.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
 
-      <div class="hero-layout">
-        <div class="hero-content">
-          <p class="eyebrow">12-Week Course</p>
-          <h1>Train As a Storyteller, Not Just a Performer.</h1>
-          <p class="hero-copy">
-            Build a reliable acting instrument, understand story with speed, and
-            action it on camera with intention.
-          </p>
-          <a class="cta" href="#apply">Join the next cohort</a>
-        </div>
-        <div class="hero-media">
-          <div class="carousel" data-carousel>
-            <div class="carousel-track" data-track>
-              <figure class="slide is-active">
-                <img
-                  src="images/acting-1.jpg"
-                  alt="Actor in class listening and reflecting on stage."
-                />
-              </figure>
-              <figure class="slide">
-                <img
-                  src="images/acting-2.jpg"
-                  alt="Instructor and student in an exercise during acting class."
-                />
-              </figure>
-              <figure class="slide">
-                <img
-                  src="images/acting-3.jpg"
-                  alt="Instructor explaining storytelling principles by a whiteboard."
-                />
-              </figure>
-              <figure class="slide">
-                <img
-                  src="images/acting-4.jpg"
-                  alt="Student performing in class with confidence."
-                />
-              </figure>
-              <figure class="slide">
-                <img
-                  src="images/acting-5.jpg"
-                  alt="Instructor coaching students in an acting session."
-                />
-              </figure>
-            </div>
+      <div class="hero-inner section">
+        <nav class="nav">
+          <div class="brand">ButterTapes, Acting Classes</div>
+          <a class="nav-link" href="#apply">Apply</a>
+        </nav>
 
-            <button
-              class="carousel-btn prev"
-              type="button"
-              data-prev
-              aria-label="Previous image"
-            >
-              &#10094;
-            </button>
-            <button
-              class="carousel-btn next"
-              type="button"
-              data-next
-              aria-label="Next image"
-            >
-              &#10095;
-            </button>
-
-            <div class="carousel-dots" data-dots>
-              <button
-                class="dot is-active"
-                type="button"
-                aria-label="Go to image 1"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                aria-label="Go to image 2"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                aria-label="Go to image 3"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                aria-label="Go to image 4"
-              ></button>
-              <button
-                class="dot"
-                type="button"
-                aria-label="Go to image 5"
-              ></button>
-            </div>
+        <div class="hero-layout">
+          <div class="hero-content">
+            <p class="eyebrow">12-Week Course</p>
+            <h1>Train As a Storyteller, Not Just a Performer.</h1>
+            <p class="hero-copy">
+              Build a reliable acting instrument, understand story with speed,
+              and action it on camera with intention.
+            </p>
+            <a class="cta" href="#apply">Join the next cohort</a>
           </div>
         </div>
       </div>
@@ -164,82 +97,279 @@
       <section class="section curriculum" id="curriculum">
         <h2>Program Breakdown</h2>
 
-        <article class="card">
-          <p class="phase">Weeks 1-4</p>
-          <h3>The Acting Instrument</h3>
-          <p>
-            <strong>Focus:</strong> Developing a responsive, reliable instrument
-            that can carry a wider range of stories without overthinking.
-          </p>
-          <p><strong>Outcomes:</strong></p>
-          <ul>
-            <li>
-              Confidence in your embodied acting instrument (not just the idea
-              of it).
-            </li>
-            <li>Expanded range of stories your instrument can action.</li>
-            <li>
-              Reduced analysis paralysis; faster access to your instinctual
-              being.
-            </li>
-          </ul>
-          <p>
-            <strong>Why this matters:</strong> If the instrument isn’t flowing,
-            no amount of “story understanding” or “screen awareness" will leave
-            an imprint on your audience.
-          </p>
+        <article class="card module">
+          <div class="module-number" aria-hidden="true">1</div>
+          <div class="module-copy">
+            <p class="phase">Weeks 1-4</p>
+            <h3>The Acting Instrument</h3>
+            <p>
+              <strong>Focus:</strong> Developing a responsive, reliable
+              instrument that can carry a wider range of stories without
+              overthinking.
+            </p>
+            <p><strong>Outcomes:</strong></p>
+            <ul>
+              <li>
+                Confidence in your embodied acting instrument (not just the idea
+                of it).
+              </li>
+              <li>Expanded range of stories your instrument can action.</li>
+              <li>
+                Reduced analysis paralysis; faster access to your instinctual
+                being.
+              </li>
+            </ul>
+            <p>
+              <strong>Why this matters:</strong> If the instrument isn’t
+              flowing, no amount of “story understanding” or “screen awareness"
+              will leave an imprint on your audience.
+            </p>
+          </div>
+          <div
+            class="module-carousel"
+            data-module-carousel
+            aria-label="Acting instrument class images"
+          >
+            <div class="module-track" data-module-track>
+              <figure class="module-slide is-active">
+                <img
+                  src="images/acting-1.jpg"
+                  alt="Actor listening during class."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/acting-2.jpg"
+                  alt="Actor working through a scene exercise."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/acting-3.jpg"
+                  alt="Acting class instruction moment."
+                />
+              </figure>
+            </div>
+            <button
+              class="module-carousel-btn prev"
+              type="button"
+              data-module-prev
+              aria-label="Previous acting instrument image"
+            >
+              &#10094;
+            </button>
+            <button
+              class="module-carousel-btn next"
+              type="button"
+              data-module-next
+              aria-label="Next acting instrument image"
+            >
+              &#10095;
+            </button>
+            <div class="module-dots" data-module-dots>
+              <button
+                class="module-dot is-active"
+                type="button"
+                aria-label="Go to acting instrument image 1"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to acting instrument image 2"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to acting instrument image 3"
+              ></button>
+            </div>
+          </div>
         </article>
 
-        <article class="card">
-          <p class="phase">Weeks 5-8</p>
-          <h3>Storytelling Comprehension</h3>
-          <p>
-            <strong>Focus:</strong> Practical understanding of how storytelling
-            works, so acting choices become clear, fast, and self-directed.
-          </p>
-          <p><strong>Outcomes:</strong></p>
-          <ul>
-            <li>
-              Instinctual, practical script comprehension that even the writer
-              will be jealous of.
-            </li>
-            <li>
-              Clear feedback for competency in self-directed performances.
-            </li>
-            <li>Less time in your head; more time in your story.</li>
-          </ul>
-          <p>
-            <strong>Why this matters:</strong> Most actors are taught to feel
-            deeply… but leave the audience untouched. This knowledge replaces
-            guessing with understanding.
-          </p>
+        <article class="card module">
+          <div class="module-number" aria-hidden="true">2</div>
+          <div class="module-copy">
+            <p class="phase">Weeks 5-8</p>
+            <h3>Storytelling Comprehension</h3>
+            <p>
+              <strong>Focus:</strong> Practical understanding of how
+              storytelling works, so acting choices become clear, fast, and
+              self-directed.
+            </p>
+            <p><strong>Outcomes:</strong></p>
+            <ul>
+              <li>
+                Instinctual, practical script comprehension that even the writer
+                will be jealous of.
+              </li>
+              <li>
+                Clear feedback for competency in self-directed performances.
+              </li>
+              <li>Less time in your head; more time in your story.</li>
+            </ul>
+            <p>
+              <strong>Why this matters:</strong> Most actors are taught to feel
+              deeply… but leave the audience untouched. This knowledge replaces
+              guessing with understanding.
+            </p>
+          </div>
+          <div
+            class="module-carousel"
+            data-module-carousel
+            aria-label="Storytelling comprehension class images"
+          >
+            <div class="module-track" data-module-track>
+              <figure class="module-slide is-active">
+                <img
+                  src="images/story-1.jpg"
+                  alt="Storytelling class discussion."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/story-2.jpg"
+                  alt="Script comprehension exercise."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/story-3.jpg"
+                  alt="Actor exploring story choices."
+                />
+              </figure>
+            </div>
+            <button
+              class="module-carousel-btn prev"
+              type="button"
+              data-module-prev
+              aria-label="Previous storytelling image"
+            >
+              &#10094;
+            </button>
+            <button
+              class="module-carousel-btn next"
+              type="button"
+              data-module-next
+              aria-label="Next storytelling image"
+            >
+              &#10095;
+            </button>
+            <div class="module-dots" data-module-dots>
+              <button
+                class="module-dot is-active"
+                type="button"
+                aria-label="Go to storytelling image 1"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to storytelling image 2"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to storytelling image 3"
+              ></button>
+            </div>
+          </div>
         </article>
 
-        <article class="card">
-          <p class="phase">Weeks 9-12</p>
-          <h3>Screen &amp; Self-Tape Technique</h3>
-          <p>
-            <strong>Focus:</strong> Actioning your story inside the frame, using
-            the medium intentionally rather than passively.
-          </p>
-          <p><strong>Outcomes:</strong></p>
-          <ul>
-            <li>
-              Actioning the writer's intentions clearly within the camera frame.
-            </li>
-            <li>
-              Operating as a one-person production unit for cinematic tapes.
-            </li>
-            <li>
-              Creating self-tapes that feel experiential and intentional - not
-              flat or procedural.
-            </li>
-          </ul>
-          <p>
-            <strong>Why this matters:</strong> Casting doesn’t need another
-            “clean” tape. They need to experience the storytellers that they are
-            searching for.
-          </p>
+        <article class="card module">
+          <div class="module-number" aria-hidden="true">3</div>
+          <div class="module-copy">
+            <p class="phase">Weeks 9-12</p>
+            <h3>Screen &amp; Self-Tape Technique</h3>
+            <p>
+              <strong>Focus:</strong> Actioning your story inside the frame,
+              using the medium intentionally rather than passively.
+            </p>
+            <p><strong>Outcomes:</strong></p>
+            <ul>
+              <li>
+                Actioning the writer's intentions clearly within the camera
+                frame.
+              </li>
+              <li>
+                Operating as a one-person production unit for cinematic tapes.
+              </li>
+              <li>
+                Creating self-tapes that feel experiential and intentional - not
+                flat or procedural.
+              </li>
+            </ul>
+            <p>
+              <strong>Why this matters:</strong> Casting doesn’t need another
+              “clean” tape. They need to experience the storytellers that they
+              are searching for.
+            </p>
+          </div>
+          <div
+            class="module-carousel"
+            data-module-carousel
+            aria-label="Screen and self-tape class images"
+          >
+            <div class="module-track" data-module-track>
+              <figure class="module-slide is-active">
+                <img src="images/screen-1.jpeg" alt="Screen class setup." />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/screen-2.jpeg"
+                  alt="Actor preparing for camera work."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/screen-3.jpeg"
+                  alt="Self-tape technique session."
+                />
+              </figure>
+              <figure class="module-slide">
+                <img
+                  src="images/screen-4.jpeg"
+                  alt="Instructor coaching screen work."
+                />
+              </figure>
+            </div>
+            <button
+              class="module-carousel-btn prev"
+              type="button"
+              data-module-prev
+              aria-label="Previous screen technique image"
+            >
+              &#10094;
+            </button>
+            <button
+              class="module-carousel-btn next"
+              type="button"
+              data-module-next
+              aria-label="Next screen technique image"
+            >
+              &#10095;
+            </button>
+            <div class="module-dots" data-module-dots>
+              <button
+                class="module-dot is-active"
+                type="button"
+                aria-label="Go to screen technique image 1"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to screen technique image 2"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to screen technique image 3"
+              ></button>
+              <button
+                class="module-dot"
+                type="button"
+                aria-label="Go to screen technique image 4"
+              ></button>
+            </div>
+          </div>
         </article>
       </section>
 
@@ -324,7 +454,7 @@
               autocomplete="email"
               required
             />
-            <button type="submit">Apply for next cohort</button>
+            <button type="submit">Apply</button>
 
             <div aria-hidden="true" class="hidden-field">
               <input
@@ -337,61 +467,65 @@
           </form>
 
           <p class="mailchimp-note">
-            Mailchimp is connected via the form action. Replace the placeholder
-            values (`YOUR_DC`, `YOUR_U_VALUE`, `YOUR_ID_VALUE`, `YOUR_F_ID`)
-            with your Mailchimp embedded form values.
+            We'll only use your email to contact you about the course. We won't
+            spam.
           </p>
         </div>
       </section>
     </main>
     <script>
-      const carousel = document.querySelector("[data-carousel]");
-      const track = carousel.querySelector("[data-track]");
-      const slides = Array.from(track.children);
-      const prevBtn = carousel.querySelector("[data-prev]");
-      const nextBtn = carousel.querySelector("[data-next]");
-      const dots = Array.from(carousel.querySelector("[data-dots]").children);
-      let index = 0;
-      let timerId;
+      document
+        .querySelectorAll("[data-module-carousel]")
+        .forEach((carousel) => {
+          const slides = Array.from(
+            carousel.querySelector("[data-module-track]").children,
+          );
+          const dots = Array.from(
+            carousel.querySelector("[data-module-dots]").children,
+          );
+          const prevBtn = carousel.querySelector("[data-module-prev]");
+          const nextBtn = carousel.querySelector("[data-module-next]");
+          let index = 0;
+          let timerId;
 
-      function render(nextIndex) {
-        slides[index].classList.remove("is-active");
-        dots[index].classList.remove("is-active");
-        index = (nextIndex + slides.length) % slides.length;
-        slides[index].classList.add("is-active");
-        dots[index].classList.add("is-active");
-      }
+          function render(nextIndex) {
+            slides[index].classList.remove("is-active");
+            dots[index].classList.remove("is-active");
+            index = (nextIndex + slides.length) % slides.length;
+            slides[index].classList.add("is-active");
+            dots[index].classList.add("is-active");
+          }
 
-      function startAutoPlay() {
-        timerId = setInterval(() => render(index + 1), 4500);
-      }
+          function startAutoPlay() {
+            timerId = setInterval(() => render(index + 1), 5200);
+          }
 
-      function restartAutoPlay() {
-        clearInterval(timerId);
-        startAutoPlay();
-      }
+          function restartAutoPlay() {
+            clearInterval(timerId);
+            startAutoPlay();
+          }
 
-      prevBtn.addEventListener("click", () => {
-        render(index - 1);
-        restartAutoPlay();
-      });
+          prevBtn.addEventListener("click", () => {
+            render(index - 1);
+            restartAutoPlay();
+          });
 
-      nextBtn.addEventListener("click", () => {
-        render(index + 1);
-        restartAutoPlay();
-      });
+          nextBtn.addEventListener("click", () => {
+            render(index + 1);
+            restartAutoPlay();
+          });
 
-      dots.forEach((dot, dotIndex) => {
-        dot.addEventListener("click", () => {
-          render(dotIndex);
-          restartAutoPlay();
+          dots.forEach((dot, dotIndex) => {
+            dot.addEventListener("click", () => {
+              render(dotIndex);
+              restartAutoPlay();
+            });
+          });
+
+          carousel.addEventListener("mouseenter", () => clearInterval(timerId));
+          carousel.addEventListener("mouseleave", startAutoPlay);
+          startAutoPlay();
         });
-      });
-
-      carousel.addEventListener("mouseenter", () => clearInterval(timerId));
-      carousel.addEventListener("mouseleave", startAutoPlay);
-
-      startAutoPlay();
     </script>
   </body>
 </html>
