@@ -260,6 +260,7 @@ li {
   flex-wrap: wrap;
 }
 
+.signup input[type="text"],
 .signup input[type="email"] {
   flex: 1 1 220px;
   border: 1px solid #9e9388;
