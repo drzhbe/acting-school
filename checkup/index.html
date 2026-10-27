@@ -14,9 +14,10 @@
 (function () {
   try {
     var q = new URLSearchParams(location.search);
-    if (q.get('bt')) sessionStorage.setItem('checkup_bt', q.get('bt'));
+    // localStorage, so the Level Survey (opened from the results in a new tab) knows them too.
+    if (q.get('bt')) localStorage.setItem('checkup_bt', q.get('bt'));
     var src = q.get('utm_source') || q.get('ref');
-    if (src) sessionStorage.setItem('checkup_source', src);
+    if (src) localStorage.setItem('checkup_source', src);
   } catch (e) {}
 })();
 </script>
@@ -262,7 +263,14 @@ function api(body) {
   return fetch(CHECKUP_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
     .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Something went wrong'); return j; }); });
 }
-function stored(k) { try { return sessionStorage.getItem(k) || ''; } catch (e) { return ''; } }
+function stored(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+// Pre-fill details they gave before on this device.
+(function () {
+  if (stored('checkup_email')) document.getElementById('emailInput').value = stored('checkup_email');
+  if (stored('checkup_name')) document.getElementById('nameInput').value = stored('checkup_name');
+})();
 
 // People who came from one of our emails: say hi and pre-fill their details.
 (function () {
@@ -421,8 +429,8 @@ var LEVELS = {
 
 var answers = {};
 var lastResults = {};
-var GROUP_SURVEY_URL = "https://butter-tapes-levels.netlify.app/";
-var OVERVIEW_URL = "https://butter-tapes-overview.netlify.app/";
+var GROUP_SURVEY_URL = "/checkup/levels/";
+var OVERVIEW_URL = "/checkup/overview/";
 var GROUP_LEVEL_MAP = { 0: null, 1: 1, 2: 2, 3: 3, 4: 4 };
 
 function getMilestoneLabel(milestones, val) {
@@ -589,7 +597,11 @@ function showResults() {
   lastResults = { level: info.label, recommendedLevel: (GROUP_LEVEL_MAP[cur] || 1), overallPct: op, domainBreakdown: domainBreakdownText.join('\n'), answersText: answersTextLines.join('\n') };
 
   var answersOut = {};
-  Object.keys(answers).forEach(function (k) { answersOut[k] = { type: answers[k].type, val: answers[k].val }; });
+  Object.keys(answers).forEach(function (k) {
+    var ij = k.split('_'), q = DOMAINS[+ij[0]] && DOMAINS[+ij[0]].questions[+ij[1]];
+    // s = how strong this answer is (0..1, inverted questions already flipped); colours the answer in emails and the app
+    answersOut[k] = { type: answers[k].type, val: answers[k].val, s: q ? scoreAnswer(answers[k], q) : undefined };
+  });
   lastSave = {
     action: 'save',
     bt: stored('checkup_bt'),
@@ -620,7 +632,7 @@ function showResults() {
     document.getElementById('lsTitle').textContent = 'Ready to check Level ' + recommendedLevel + ' in detail?';
     document.getElementById('lsBody').textContent = 'This result points to Level ' + recommendedLevel + ' (' + info.label + '). If you\'re an enrolled student, the Level Survey gives you a full breakdown against the actual graduation criteria for that level.';
     document.getElementById('lsButton').textContent = 'Check My Detailed Progress →';
-    document.getElementById('lsButton').href = GROUP_SURVEY_URL;
+    document.getElementById('lsButton').href = GROUP_SURVEY_URL + '?group=' + recommendedLevel;
     document.getElementById('lsSecondary').innerHTML = '<a href="' + OVERVIEW_URL + '" target="_blank" style="color:rgba(255,255,255,0.65);font-size:13px;text-decoration:underline;">Not sure what Level ' + recommendedLevel + ' actually involves? See what it covers first.</a>';
   }
   linkBlock.style.display = 'flex';
@@ -657,6 +669,7 @@ function submitEmail() {
       return api({ action: 'email', id: saved.id, email: email, name: name, wantsNews: wantsNews, wantsCall: wantsOnboarding });
     })
     .then(function () {
+      store('checkup_email', email); if (name) store('checkup_name', name);
       document.querySelector('.email-form').style.display = 'none';
       document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = 'none'; });
       btn.style.display = 'none';
