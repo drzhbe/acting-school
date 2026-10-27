@@ -54,6 +54,8 @@ main{max-width:820px;margin:0 auto;padding:64px 40px 100px;}
 .domain-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--dark);}
 .domain-subtitle{font-size:14px;color:var(--light);margin-bottom:8px;margin-top:4px;font-style:italic;line-height:1.5;}
 .question-item{padding:22px 0;border-bottom:1px solid #F0F0E8;}
+.question-short{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px;}
+.focus-short{color:var(--dark);font-weight:600;}
 .question-text{font-size:15px;color:var(--mid);line-height:1.65;margin-bottom:16px;}
 .yn-group{display:flex;gap:10px;}
 .yn-btn{flex:1;padding:11px 8px;border:1.5px solid #E0E0D8;background:var(--white);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;color:var(--light);}
@@ -294,11 +296,11 @@ var DOMAINS = [
     subtitle: 'Being secure in your lines allows you to focus on what actually matters — the scene, the other person, the moment.',
     level: 1,
     questions: [
-      { text: 'When I perform, I never drop a line or have to think about what comes next.', type: 'yn' },
-      { text: 'I can deliver my lines in completely different behaviours — faster, slower, angrier, calmer.', type: 'yn' },
-      { text: 'Learning lines feels effortful and time-consuming for me.', type: 'yn', invert: true },
-      { text: 'How many days does it typically take me to learn two pages of dialogue accurately?', type: 'slider', milestones: ['More than a week', 'A few days', 'A day', 'A couple of hours', 'An hour or less'] },
-      { text: 'Once I have learned my lines, they flow as naturally as reciting my alphabet — no effort, no hesitation.', type: 'yn' }
+      { short: 'Correctness', text: 'When I perform, I never drop a line or have to think about what comes next.', type: 'yn' },
+      { short: 'Freedom', text: 'I can deliver my lines in completely different behaviours — faster, slower, angrier, calmer.', type: 'yn' },
+      { short: 'Effort', text: 'Learning lines feels effortful and time-consuming for me.', type: 'yn', invert: true },
+      { short: 'Time', text: 'How many days does it typically take me to learn two pages of dialogue accurately?', type: 'slider', milestones: ['More than a week', 'A few days', 'A day', 'A couple of hours', 'An hour or less'] },
+      { short: 'Flow', text: 'Once I have learned my lines, they flow as naturally as reciting my alphabet — no effort, no hesitation.', type: 'yn' }
     ]
   },
   {
@@ -306,13 +308,13 @@ var DOMAINS = [
     subtitle: 'Being able to read a script and understand what is really happening — not just the words, but the story underneath.',
     level: 1,
     questions: [
-      { text: 'I can clearly explain what my character wants.', type: 'yn' },
-      { text: 'I know what my character was doing or feeling just before the scene started.', type: 'yn' },
-      { text: 'I can identify what a scene is ultimately about — the point it is trying to make.', type: 'yn' },
-      { text: 'I understand what question the audience is asking themselves when they watch a scene — and when they get the answer.', type: 'yn' },
-      { text: 'I can state exactly what I want from the other person in a scene in a single, specific phrase — not just a general goal.', type: 'yn' },
-      { text: 'I arrive at the start of a scene already in motion — I know what just happened to my character before it began, and I use it.', type: 'yn' },
-      { text: 'I understand and can apply beats to a scene.', type: 'yn' }
+      { short: 'Want', text: 'I can clearly explain what my character wants.', type: 'yn' },
+      { short: 'Moment Before', text: 'I know what my character was doing or feeling just before the scene started.', type: 'yn' },
+      { short: 'Point', text: 'I can identify what a scene is ultimately about — the point it is trying to make.', type: 'yn' },
+      { short: 'Dramatic Question', text: 'I understand what question the audience is asking themselves when they watch a scene — and when they get the answer.', type: 'yn' },
+      { short: 'Cap', text: 'I can state exactly what I want from the other person in a scene in a single, specific phrase — not just a general goal.', type: 'yn' },
+      { short: 'Arriving in Motion', text: 'I arrive at the start of a scene already in motion — I know what just happened to my character before it began, and I use it.', type: 'yn' },
+      { short: 'Beats', text: 'I understand and can apply beats to a scene.', type: 'yn' }
     ]
   },
   {
@@ -320,14 +322,14 @@ var DOMAINS = [
     subtitle: 'Acting is doing — not just feeling.',
     level: 1,
     questions: [
-      { text: 'In performance, my attention is genuinely on where it matters for the scene — a person, an object, an activity. I am not self-conscious.', type: 'yn' },
-      { text: 'When I am in a scene, my attention is genuinely on the other person — not on my own performance or what I am about to say next.', type: 'yn' },
-      { text: 'My behaviour in a scene changes based on what the other person does — I am not just delivering lines.', type: 'yn' },
-      { text: 'I can connect to a scene personally — I am experiencing it, not just performing it.', type: 'yn' },
-      { text: 'When I am performing well, it feels effortless — I am not managing or monitoring myself, it is just happening.', type: 'yn' },
-      { text: 'I can play the same scene in completely different ways — with completely different behaviours — because I am not locked to how I first felt it.', type: 'yn' },
-      { text: 'I can feel when I am doing good acting.', type: 'yn' },
-      { text: 'I can repeat a good performance consistently.', type: 'yn' }
+      { short: 'Attention', text: 'In performance, my attention is genuinely on where it matters for the scene — a person, an object, an activity. I am not self-conscious.', type: 'yn' },
+      { short: 'Listening', text: 'When I am in a scene, my attention is genuinely on the other person — not on my own performance or what I am about to say next.', type: 'yn' },
+      { short: 'Moment-to-moment', text: 'My behaviour in a scene changes based on what the other person does — I am not just delivering lines.', type: 'yn' },
+      { short: 'Embodiment', text: 'I can connect to a scene personally — I am experiencing it, not just performing it.', type: 'yn' },
+      { short: 'Effort', text: 'When I am performing well, it feels effortless — I am not managing or monitoring myself, it is just happening.', type: 'yn' },
+      { short: 'Freedom', text: 'I can play the same scene in completely different ways — with completely different behaviours — because I am not locked to how I first felt it.', type: 'yn' },
+      { short: 'Diagnostic', text: 'When I watch back my tape I can see when I am doing good acting.', type: 'yn' },
+      { short: 'Consistency', text: 'I can repeat a good performance consistently.', type: 'yn' }
     ]
   },
   {
@@ -335,10 +337,10 @@ var DOMAINS = [
     subtitle: 'Most auditions are now self-tapes. A bad setup can cost you the callback regardless of how well you act.',
     level: 1,
     questions: [
-      { text: 'I have a self-tape setup I am confident in — camera, lighting, and backdrop sorted.', type: 'yn' },
-      { text: 'My self-tapes look professional — clear image, good lighting, no distracting background.', type: 'yn' },
-      { text: 'My self-tapes sound professional — the audio is clear and there is no background noise.', type: 'yn' },
-      { text: 'I know where to look when filming — and I am confident about how to frame myself.', type: 'yn' }
+      { short: 'Have the Setup', text: 'I have a self-tape setup I am confident in — camera, lighting, and backdrop sorted.', type: 'yn' },
+      { short: 'Picture', text: 'My self-tapes look professional — clear image, good lighting, no distracting background.', type: 'yn' },
+      { short: 'Sound', text: 'My self-tapes sound professional — the audio is clear and there is no background noise.', type: 'yn' },
+      { short: 'Eye-line', text: 'I know where to look when filming — and I am confident about how to frame myself.', type: 'yn' }
     ]
   },
   {
@@ -346,9 +348,9 @@ var DOMAINS = [
     subtitle: 'Being audition-ready means having a repeatable process that works under pressure.',
     level: 2,
     questions: [
-      { text: 'I have some form of process to effectively and accurately prepare a scene — I am not winging it each time.', type: 'yn' },
-      { text: 'How much time do I need to prepare a scene I am happy with?', type: 'slider', milestones: ['A week or more', 'A couple of days', 'A day', 'A few hours', 'An hour or less'] },
-      { text: 'When I watch my own audition tapes back, I can clearly see what is working and what is not — and fix it as a result.', type: 'yn' }
+      { short: 'Process', text: 'I have some form of process to effectively and accurately prepare a scene — I am not winging it each time.', type: 'yn' },
+      { short: 'Time', text: 'How much time do I need to prepare a scene I am happy with?', type: 'slider', milestones: ['A week or more', 'A couple of days', 'A day', 'A few hours', 'An hour or less'] },
+      { short: 'Diagnostic', text: 'When I watch my own audition tapes back, I can clearly see what is working and what is not — and fix it as a result.', type: 'yn' }
     ]
   },
   {
@@ -356,14 +358,14 @@ var DOMAINS = [
     subtitle: "Acting requires making someone else's words and circumstances feel genuinely yours.",
     level: 2,
     questions: [
-      { text: 'I have a clear process for connecting personally to a scene — I am not just hoping it lands.', type: 'yn' },
-      { text: 'When a scene asks me to feel or do something I do not naturally feel, I can genuinely access it.', type: 'yn' },
-      { text: 'I do not get stuck trying to feel the scene — my connection translates into action, not just internal experience.', type: 'yn' },
-      { text: 'How long does it typically take me to genuinely connect to a scene?', type: 'slider', milestones: ['A day or more', 'A couple of hours', 'An hour', 'Under an hour', 'A couple of minutes'] },
-      { text: 'I can connect to a wide range of scenes — not just material that is close to my own life.', type: 'yn' },
-      { text: 'My connection holds under pressure — it works in auditions and on camera, not just in rehearsal.', type: 'yn' },
-      { text: 'I can feel when I am performing a scene rather than living it.', type: 'yn' },
-      { text: 'When something is not working in a scene, I know how to diagnose and fix it myself — without needing a teacher or director to tell me.', type: 'yn' }
+      { short: 'Embodiment Process', text: 'I have a clear process for connecting personally to a scene — I am not just hoping it lands.', type: 'yn' },
+      { short: 'Substitution', text: 'When a scene asks me to feel or do something I do not naturally feel, I can genuinely access it.', type: 'yn' },
+      { short: 'Action vs Feeling', text: 'I do not get stuck trying to feel the scene — my connection translates into action, not just internal experience.', type: 'yn' },
+      { short: 'Time', text: 'How long does it typically take me to genuinely connect to a scene?', type: 'slider', milestones: ['A day or more', 'A couple of hours', 'An hour', 'Under an hour', 'A couple of minutes'] },
+      { short: 'Range', text: 'I can connect to a wide range of scenes — not just material that is close to my own life.', type: 'yn' },
+      { short: 'Pressure', text: 'My connection holds under pressure — it works in auditions and on camera, not just in rehearsal.', type: 'yn' },
+      { short: 'Awareness', text: 'I can feel when I am performing a scene rather than living it.', type: 'yn' },
+      { short: 'Diagnostic', text: 'When something is not working in a scene, I know how to diagnose and fix it myself — without needing a teacher or director to tell me.', type: 'yn' }
     ]
   },
   {
@@ -371,11 +373,11 @@ var DOMAINS = [
     subtitle: 'How you relate to the people and things in a scene determines everything about how you act.',
     level: 3,
     questions: [
-      { text: 'Given any scene, script, film, or performance, I can identify the specific relationship each character has to the people and things around them — not just the surface label.', type: 'yn' },
-      { text: 'I understand how my character specifically feels about the other person in the scene — beyond surface labels like "they are friends" or "they are enemies."', type: 'yn' },
-      { text: 'My relationship to the other person in a scene changes how I physically act — not just how I feel.', type: 'yn' },
-      { text: 'I can play a scene where my character wants something but is simultaneously pulled in the opposite direction by who the other person is to them.', type: 'yn' },
-      { text: 'When a director tells me to play the relationship differently, I know how to adjust.', type: 'yn' }
+      { short: 'Relationship', text: 'Given any scene, script, film, or performance, I can identify the specific relationship each character has to the people and things around them — not just the surface label.', type: 'yn' },
+      { short: 'POV', text: 'I understand how my character specifically feels about the other person in the scene — beyond surface labels like "they are friends" or "they are enemies."', type: 'yn' },
+      { short: 'Action vs Feeling', text: 'My relationship to the other person in a scene changes how I physically act — not just how I feel.', type: 'yn' },
+      { short: 'Conflict', text: 'I can play a scene where my character wants something but is simultaneously pulled in the opposite direction by who the other person is to them.', type: 'yn' },
+      { short: 'Freedom', text: 'When a director tells me to play the relationship differently, I know how to adjust.', type: 'yn' }
     ]
   },
   {
@@ -383,14 +385,14 @@ var DOMAINS = [
     subtitle: 'Playing a character means understanding how a different person experiences the world.',
     level: 3,
     questions: [
-      { text: 'Given any scene, script, film, or performance, I can identify a character\'s psychological reality — how they see and experience the world — from what is written or performed.', type: 'yn' },
-      { text: 'I can play characters who are very different from me — without it becoming a caricature.', type: 'yn' },
-      { text: 'I understand how a character experiences the world and can access their psychological reality — not just copy their physical mannerisms.', type: 'yn' },
-      { text: 'I can play characters whose values or worldview I disagree with — without judging them or going on autopilot.', type: 'yn' },
-      { text: 'My character changes and evolves across a scene — authentically tracking the arc without diverging so much that it becomes a completely different character.', type: 'yn' },
-      { text: 'I can play a fully realised character without losing the story — the character serves the scene, not the other way around.', type: 'yn' },
-      { text: 'I can maintain a consistent character throughout a scene — even when improvising or going off-script.', type: 'yn' },
-      { text: 'I can identify the old way my character used to cope or get by — the thing that worked for them right up until this story forced them to change.', type: 'yn' }
+      { short: 'POV', text: 'Given any scene, script, film, or performance, I can identify a character\'s psychological reality — how they see and experience the world — from what is written or performed.', type: 'yn' },
+      { short: 'POV', text: 'I can play characters who are very different from me — without it becoming a caricature.', type: 'yn' },
+      { short: 'Embodiment', text: 'I understand how a character experiences the world and can access their psychological reality — not just copy their physical mannerisms.', type: 'yn' },
+      { short: 'Range', text: 'I can play characters whose values or worldview I disagree with — without judging them or going on autopilot.', type: 'yn' },
+      { short: 'Arc', text: 'My character changes and evolves across a scene — authentically tracking the arc without diverging so much that it becomes a completely different character.', type: 'yn' },
+      { short: 'Story', text: 'I can play a fully realised character without losing the story — the character serves the scene, not the other way around.', type: 'yn' },
+      { short: 'Consistency', text: 'I can maintain a consistent character throughout a scene — even when improvising or going off-script.', type: 'yn' },
+      { short: 'Flaw', text: 'I can identify the old way my character used to cope or get by — the thing that worked for them right up until this story forced them to change.', type: 'yn' }
     ]
   },
   {
@@ -398,13 +400,13 @@ var DOMAINS = [
     subtitle: 'Every actor is a business. Your signature is your product, your materials are your marketing, and the industry professionals who cast you are your clients.',
     level: 3,
     questions: [
-      { text: 'I can describe in one sentence what makes me uniquely castable — the quality no other actor can replicate.', type: 'yn' },
-      { text: 'I actively make my signature visible in every audition I do.', type: 'yn' },
-      { text: 'I know what types of scenes and headshots I need — my materials reflect who I actually am and what I am castable for.', type: 'yn' },
-      { text: 'I have a presence on the major casting platforms — casting directors can find me.', type: 'yn' },
-      { text: 'I am not entirely dependent on being given opportunities — I can create my own visibility and work.', type: 'yn' },
-      { text: 'I understand who the actual decision makers are in the industry — and I market myself to them directly.', type: 'yn' },
-      { text: 'If a casting director asked me right now what makes me different from every other actor they will see today, I would have a clear answer.', type: 'yn' }
+      { short: 'Offer', text: 'I can describe in one sentence what makes me uniquely castable — the quality no other actor can replicate.', type: 'yn' },
+      { short: 'Branding', text: 'I actively make my signature visible in every audition I do.', type: 'yn' },
+      { short: 'Materials', text: 'I know what types of scenes and headshots I need — my materials reflect who I actually am and what I am castable for.', type: 'yn' },
+      { short: 'Platforms', text: 'I have a presence on the major casting platforms — casting directors can find me.', type: 'yn' },
+      { short: 'Self-producing', text: 'I am not entirely dependent on being given opportunities — I can create my own visibility and work.', type: 'yn' },
+      { short: 'Agents and Casting Directors', text: 'I understand who the actual decision makers are in the industry — and I market myself to them directly.', type: 'yn' },
+      { short: 'Offer', text: 'If a casting director asked me right now what makes me different from every other actor they will see today, I would have a clear answer.', type: 'yn' }
     ]
   },
   {
@@ -412,9 +414,9 @@ var DOMAINS = [
     subtitle: 'Three honest questions about where you actually are right now.',
     level: 0,
     questions: [
-      { text: 'How confident are you walking into an audition right now?', type: 'slider', milestones: ['Not at all', 'Slightly', 'Somewhat', 'Mostly', 'Completely'] },
-      { text: 'How often do you finish a performance feeling like you genuinely nailed it?', type: 'slider', milestones: ['Rarely', 'Occasionally', 'Sometimes', 'Often', 'Consistently'] },
-      { text: 'How much do you feel like you have a clear, repeatable craft — vs winging it and hoping for the best?', type: 'slider', milestones: ['Winging it', 'Mostly guessing', 'Some process', 'Mostly clear', 'Clear craft'] }
+      { short: 'Confidence', text: 'How confident are you walking into an audition right now?', type: 'slider', milestones: ['Not at all', 'Slightly', 'Somewhat', 'Mostly', 'Completely'] },
+      { short: 'Nailing It', text: 'How often do you finish a performance feeling like you genuinely nailed it?', type: 'slider', milestones: ['Rarely', 'Occasionally', 'Sometimes', 'Often', 'Consistently'] },
+      { short: 'Craft', text: 'How much do you feel like you have a clear, repeatable craft — vs winging it and hoping for the best?', type: 'slider', milestones: ['Winging it', 'Mostly guessing', 'Some process', 'Mostly clear', 'Clear craft'] }
     ]
   }
 ];
@@ -448,7 +450,7 @@ function renderQuestions() {
     html += '<p class="domain-subtitle">' + domain.subtitle + '</p>';
     domain.questions.forEach(function(q, qi) {
       var key = di + '_' + qi;
-      html += '<div class="question-item"><div class="question-text">' + q.text + '</div>';
+      html += '<div class="question-item">' + (q.short ? '<div class="question-short">' + q.short + '</div>' : '') + '<div class="question-text">' + q.text + '</div>';
       if (q.type === 'slider') {
         var firstLabel = q.milestones[0];
         html += '<div class="slider-wrap">';
@@ -531,7 +533,7 @@ function showResults() {
       var key = di + '_' + qi;
       var s = scoreAnswer(answers[key], q);
       score += s; total++;
-      if (q.type === 'yn' && s < 0.5) focusItems.push({ level: domain.level, text: q.text });
+      if (q.type === 'yn' && s < 0.5) focusItems.push({ level: domain.level, text: q.text, short: q.short });
     });
     domainScores.push({ name: domain.name, level: domain.level, score: score, total: total });
   });
@@ -591,7 +593,7 @@ function showResults() {
 
   var nextLvl = Math.min(cur + 1, 3);
   var rel = focusItems.filter(function(f) { return f.level <= nextLvl; }).slice(0, 5);
-  var flHtml = rel.length > 0 ? rel.map(function(f) { return '<li>' + f.text + '</li>'; }).join('') : '<li style="color:var(--light);font-style:italic;">Book a call to discuss what\'s next for you specifically.</li>';
+  var flHtml = rel.length > 0 ? rel.map(function(f) { return '<li>' + (f.short ? '<strong class="focus-short">' + f.short + '.</strong> ' : '') + f.text + '</li>'; }).join('') : '<li style="color:var(--light);font-style:italic;">Book a call to discuss what\'s next for you specifically.</li>';
   document.getElementById('focusList').innerHTML = flHtml;
 
   lastResults = { level: info.label, recommendedLevel: (GROUP_LEVEL_MAP[cur] || 1), overallPct: op, domainBreakdown: domainBreakdownText.join('\n'), answersText: answersTextLines.join('\n') };
@@ -600,7 +602,8 @@ function showResults() {
   Object.keys(answers).forEach(function (k) {
     var ij = k.split('_'), q = DOMAINS[+ij[0]] && DOMAINS[+ij[0]].questions[+ij[1]];
     // s = how strong this answer is (0..1, inverted questions already flipped); colours the answer in emails and the app
-    answersOut[k] = { type: answers[k].type, val: answers[k].val, s: q ? scoreAnswer(answers[k], q) : undefined };
+    // t = the question's short name (shown instead of the full question in the app)
+    answersOut[k] = { type: answers[k].type, val: answers[k].val, s: q ? scoreAnswer(answers[k], q) : undefined, t: q ? q.short : undefined };
   });
   lastSave = {
     action: 'save',
