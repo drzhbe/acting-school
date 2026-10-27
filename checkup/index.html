@@ -65,12 +65,19 @@ main{max-width:820px;margin:0 auto;padding:64px 40px 100px;}
 .yn-btn.sel-unsure{border-color:var(--gold);border-width:2px;background:#FDF3D0;color:#8B6400;}
 .slider-wrap{display:flex;align-items:flex-start;gap:16px;flex-direction:column;}
 .slider-row{display:flex;align-items:center;gap:12px;width:100%;}
-.slider-container{flex:1;}
-input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:#E0E0D8;border-radius:2px;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--dark);border-radius:50%;cursor:pointer;border:2px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,0.2);}
-input[type=range]::-webkit-slider-thumb:hover{background:var(--gold);}
-.slider-milestones{display:flex;justify-content:space-between;margin-top:8px;}
-.slider-milestone{font-size:10px;color:var(--lighter);text-align:center;max-width:70px;line-height:1.3;}
+.slider-container{flex:1;padding:0 34px;min-width:0;}
+input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:22px;margin:0;background:transparent;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:#D6D6CE;border-radius:2px;}
+input[type=range]::-moz-range-track{height:3px;background:#D6D6CE;border-radius:2px;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-9.5px;background:var(--dark);border-radius:50%;cursor:pointer;border:2px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,0.25);}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--dark);border-radius:50%;cursor:pointer;border:2px solid var(--white);box-shadow:0 1px 4px rgba(0,0,0,0.25);}
+input[type=range]:hover::-webkit-slider-thumb{background:var(--gold);}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--gold);outline-offset:2px;}
+/* Labels sit exactly under the 5 stops. The thumb's centre runs from 11px to (width - 11px). */
+.slider-milestones{position:relative;height:34px;margin-top:8px;}
+.slider-milestone{position:absolute;top:0;transform:translateX(-50%);width:76px;font-size:12px;color:var(--mid);text-align:center;line-height:1.3;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;}
+.slider-milestone:hover{color:var(--dark);}
+.slider-milestone.on{color:var(--gold);font-weight:600;}
 .slider-current{font-size:13px;font-weight:600;color:var(--gold);min-width:120px;padding:6px 10px;background:var(--gold-light);border-radius:2px;text-align:center;}
 .nav-buttons{display:flex;gap:14px;margin-top:48px;padding-top:32px;border-top:1px solid #E8E8E0;}
 .btn-primary{background:var(--dark);color:var(--white);border:none;padding:15px 36px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.04em;cursor:pointer;border-radius:2px;transition:background 0.2s;}
@@ -146,7 +153,7 @@ input[type=range]::-webkit-slider-thumb:hover{background:var(--gold);}
 .cta-bottom-btn:hover{opacity:0.88;}
 .cta-bottom-sub{margin-top:18px;font-size:13px;color:rgba(255,255,255,0.4);}
 @media(max-width:600px){.cta-top-inner{flex-direction:column;padding:28px 24px;}.cta-top-btn{width:100%;text-align:center;}.cta-block-bottom{padding:40px 28px;}.cta-block-bottom h3{font-size:26px;}}
-@media(max-width:600px){header{padding:20px 24px;}main{padding:40px 24px 80px;}.cta-block{flex-direction:column;}.result-banner{padding:36px 28px;}.result-level{font-size:36px;}.yn-btn{font-size:12px;padding:10px 4px;}.email-form{flex-direction:column;}}
+@media(max-width:600px){header{padding:20px 24px;}main{padding:40px 24px 80px;}.cta-block{flex-direction:column;}.result-banner{padding:36px 28px;}.result-level{font-size:36px;}.yn-btn{font-size:12px;padding:10px 4px;}.email-form{flex-direction:column;}.slider-row{flex-direction:column;align-items:stretch;}.slider-container{padding:0 24px;}.slider-milestone{width:56px;font-size:11px;}.slider-milestones{height:40px;}.slider-current{align-self:flex-start;}}
 </style>
 </head>
 <body>
@@ -456,7 +463,10 @@ function renderQuestions() {
         html += '<div class="slider-container">';
         html += '<input type="range" min="1" max="5" value="1" id="sl_' + key + '" oninput="handleSlider(event, \'' + key + '\')">';
         html += '<div class="slider-milestones">';
-        q.milestones.forEach(function(m) { html += '<div class="slider-milestone">' + m + '</div>'; });
+        q.milestones.forEach(function(m, mi) {
+          var pos = q.milestones.length > 1 ? mi / (q.milestones.length - 1) : 0;
+          html += '<button type="button" tabindex="-1" class="slider-milestone' + (mi === 0 ? ' on' : '') + '" style="left:calc(11px + (100% - 22px) * ' + pos + ')" onclick="pickMilestone(\'' + key + '\',' + mi + ')">' + m + '</button>';
+        });
         html += '</div></div>';
         html += '<div class="slider-current" id="sv_' + key + '">' + firstLabel + '</div>';
         html += '</div></div>';
@@ -488,6 +498,24 @@ function handleSlider(event, key) {
   if (sv && milestones.length) {
     sv.textContent = getMilestoneLabel(milestones, val);
   }
+  markMilestone(key, val);
+}
+
+// Highlights the label under the thumb.
+function markMilestone(key, val) {
+  var input = document.getElementById('sl_' + key);
+  if (!input) return;
+  var labels = input.parentNode.querySelectorAll('.slider-milestone');
+  var idx = Math.round((val - 1) / 4 * (labels.length - 1));
+  labels.forEach(function(l, i) { l.classList.toggle('on', i === idx); });
+}
+
+// Clicking a label moves the slider there.
+function pickMilestone(key, mi) {
+  var input = document.getElementById('sl_' + key);
+  var n = input.parentNode.querySelectorAll('.slider-milestone').length;
+  input.value = 1 + Math.round(mi / Math.max(n - 1, 1) * 4);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 function setYN(key, val) {
