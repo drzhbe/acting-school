@@ -218,7 +218,7 @@
         <h3>Book a check-in with Bede.</h3>
         <p>Talk through your results and confirm whether you are ready to move to the next group.</p>
       </div>
-      <button class="btn-gold" onclick="window.open('https://calendly.com/bede-smith1999/actors-journey-onboarding','_blank')">Book a Call</button>
+      <a class="btn-gold" href="https://calendly.com/bede-smith1999/actors-journey-onboarding" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">Book a Call</a>
     </div>
     <span class="restart" onclick="resetSave(); showScreen('s0')">← Check a different group</span>
   </div>
@@ -376,6 +376,12 @@ function api(body) {
 function stored(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
 function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+// Funnel steps, reported through track.js (see app.buttertapes.com/track.js). Calls before it loads are queued.
+function bt(e, l, id) { if (window.btTrack) btTrack(e, l, id); else (window.btq = window.btq || []).push([e, l, id]); }
+function attr() { var a = window.btAttr ? btAttr() : {}; return { source: a.source || stored('checkup_source'), medium: a.medium || '', campaign: a.campaign || '', visitor: a.visitor || '' }; }
+var btStarted = false;
+function btStart(e) { if (!btStarted) { btStarted = true; bt(e); } }
+
 document.addEventListener('DOMContentLoaded', function () {
   if (stored('checkup_email')) document.getElementById('emailInput').value = stored('checkup_email');
   if (stored('checkup_name')) document.getElementById('nameInput').value = stored('checkup_name');
@@ -408,7 +414,7 @@ function saveSurvey(domainScores, pct) {
     });
   });
   lastSave = {
-    action: 'save', kind: 'levels', bt: stored('checkup_bt'), source: stored('checkup_source'),
+    action: 'save', kind: 'levels', bt: stored('checkup_bt'), source: attr().source, medium: attr().medium, campaign: attr().campaign, visitor: attr().visitor,
     result: {
       group: currentGroup, overallPct: pct, answers: out, answersText: lines.join('\n'),
       domainScores: domainScores.map(function (d) { return { name: d.name, pct: d.total > 0 ? Math.round((d.score / d.total) * 100) : 0 }; })
@@ -416,6 +422,7 @@ function saveSurvey(domainScores, pct) {
   };
   savedAttempt = Object.keys(out).length ? api(lastSave) : null;
   if (savedAttempt) savedAttempt.catch(function (e) { console.warn('Survey not saved:', e); });
+  if (savedAttempt) savedAttempt.then(function (s) { bt('levels_finish', 'Group ' + currentGroup, s.id); }, function () {});
 }
 
 function resetSave() {
@@ -486,6 +493,7 @@ function renderSurvey(g) {
 }
 
 function setYN(key, val) {
+  btStart('levels_start');
   answers[key] = val;
   ['yes','unsure','no'].forEach(function(v) { var b = document.getElementById('yn_' + key + '_' + v); if(b) b.className='yn-btn'; });
   var b = document.getElementById('yn_' + key + '_' + val);
@@ -578,5 +586,6 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 </script>
+<!-- Cloudflare Web Analytics (page views; no cookies) --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c99b1e9b2c4421ab5ba908590bfdfd3"}'></script>
 </body>
 </html>

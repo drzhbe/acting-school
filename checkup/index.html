@@ -280,6 +280,12 @@ function api(body) {
 function stored(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
 function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+// Funnel steps, reported through track.js (see app.buttertapes.com/track.js). Calls before it loads are queued.
+function bt(e, l, id) { if (window.btTrack) btTrack(e, l, id); else (window.btq = window.btq || []).push([e, l, id]); }
+function attr() { var a = window.btAttr ? btAttr() : {}; return { source: a.source || stored('checkup_source'), medium: a.medium || '', campaign: a.campaign || '', visitor: a.visitor || '' }; }
+var btStarted = false;
+function btStart(e) { if (!btStarted) { btStarted = true; bt(e); } }
+
 // Pre-fill details they gave before on this device.
 (function () {
   if (stored('checkup_email')) document.getElementById('emailInput').value = stored('checkup_email');
@@ -492,6 +498,7 @@ function renderQuestions() {
 }
 
 function handleSlider(event, key) {
+  btStart('checkup_start');
   var val = parseInt(event.target.value);
   var prev = answers[key] || { invert: false, milestones: [] };
   // Always preserve invert and milestones from initial setup
@@ -523,6 +530,7 @@ function pickMilestone(key, mi) {
 }
 
 function setYN(key, val) {
+  btStart('checkup_start');
   answers[key] = { type: 'yn', val: val };
   ['yes','unsure','no'].forEach(function(v) {
     var b = document.getElementById('yn_' + key + '_' + v);
@@ -638,7 +646,7 @@ function showResults() {
   lastSave = {
     action: 'save',
     bt: stored('checkup_bt'),
-    source: stored('checkup_source'),
+    source: attr().source, medium: attr().medium, campaign: attr().campaign, visitor: attr().visitor,
     result: {
       answers: answersOut,
       answersText: lastResults.answersText,
@@ -650,6 +658,7 @@ function showResults() {
   };
   savedAttempt = api(lastSave);
   savedAttempt.catch(function (e) { console.warn('Checkup not saved:', e); });
+  savedAttempt.then(function (s) { bt('checkup_finish', info.label, s.id); }, function () {});
 
   var recommendedLevel = GROUP_LEVEL_MAP[cur] || 1;
   var isEarlyDays = (cur === 0);
@@ -703,6 +712,7 @@ function submitEmail() {
     })
     .then(function () {
       store('checkup_email', email); if (name) store('checkup_name', name);
+      bt('email_left', wantsOnboarding ? 'wants_call' : '');
       document.querySelector('.email-form').style.display = 'none';
       document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = 'none'; });
       btn.style.display = 'none';
@@ -720,5 +730,6 @@ function skipEmail() { document.querySelector('.email-block').style.display = 'n
 function showScreen(id) { document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); }); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
 function restart() { answers = {}; savedAttempt = null; lastSave = null; document.querySelector('.email-form').style.display = ''; document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = ''; }); var b = document.getElementById('emailBtn'); b.style.display = ''; b.disabled = false; b.textContent = 'Send My Results'; document.getElementById('emailError').style.display = 'none'; document.querySelector('.email-block').style.display = 'block'; document.getElementById('emailSuccess').style.display = 'none'; document.getElementById('emailInput').value = ''; document.getElementById('nameInput').value = ''; showScreen('s0'); }
 </script>
+<!-- Cloudflare Web Analytics (page views; no cookies) --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c99b1e9b2c4421ab5ba908590bfdfd3"}'></script>
 </body>
 </html>
