@@ -41,8 +41,8 @@
           <span>Butter<em>Tapes</em></span>
         </a>
         <div class="nav-links">
-          <a href="/checkup/">Free checkup</a>
-          <a class="nav-pill" href="#reach-out">Get in touch</a>
+          <a href="/checkup/" data-track="nav_checkup">Free checkup</a>
+          <a class="nav-pill" href="#reach-out" data-track="nav_get_in_touch">Get in touch</a>
         </div>
       </nav>
 
@@ -51,8 +51,8 @@
         <h1>A studio for actors who want to <em>make.</em></h1>
         <p class="lede">We get you sharp in the room, clear on the market, and on set with a film of your own.</p>
         <div class="hero-actions">
-          <a class="btn btn-butter" href="#reach-out">Get in touch</a>
-          <a class="btn btn-ghost" href="/checkup/">Take the free checkup</a>
+          <a class="btn btn-butter" href="#reach-out" data-track="hero_get_in_touch">Get in touch</a>
+          <a class="btn btn-ghost" href="/checkup/" data-track="hero_checkup">Take the free checkup</a>
         </div>
       </div>
     </header>
@@ -117,10 +117,10 @@
             <p class="eyebrow">Free · 10 minutes</p>
             <h2 id="checkup-title">Where are you at as an actor, right now?</h2>
             <p>Take our free actor diagnostic. You'll get a clear read on where you're at and which areas to focus on next, with the results emailed to you to keep.</p>
-            <a class="btn btn-dark" href="/checkup/?ref=landing">Take the free checkup →</a>
+            <a class="btn btn-dark" href="/checkup/" data-track="band_checkup">Take the free checkup →</a>
           </div>
 
-          <a class="iso-stage" href="/checkup/?ref=landing-card" aria-label="Take the free actor checkup">
+          <a class="iso-stage" href="/checkup/" data-track="card_checkup" aria-label="Take the free actor checkup">
             <div class="iso-card" data-iso>
               <div class="rc-head">
                 <span class="rc-logo">Butter<em>Tapes</em></span>
@@ -234,6 +234,14 @@
         }, { threshold: 0.6 }).observe(card);
       }
 
+      // Funnel steps go through track.js (loaded at the end); calls before it loads are queued.
+      function bt(event, label) { window.btTrack ? btTrack(event, label) : (window.btq = window.btq || []).push([event, label]); }
+      function attribution() {
+        if (window.btAttr) return btAttr();
+        const qs = new URLSearchParams(location.search);
+        return { source: qs.get("utm_source") || qs.get("ref") || "", medium: qs.get("utm_medium") || "", campaign: qs.get("utm_campaign") || "" };
+      }
+
       // Reach-out form -> contact function (stores the lead, adds them to People, emails us).
       const CONTACT_API = "https://vaajpqwcgowvffkearfs.supabase.co/functions/v1/contact";
       const form = document.querySelector("[data-reach]");
@@ -246,15 +254,15 @@
         if (!name) return fail("Please add your name.", form.name);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("Please enter a valid email address.", form.email);
         btn.disabled = true; btn.textContent = "Sending…";
-        const qs = new URLSearchParams(location.search);
         try {
           const res = await fetch(CONTACT_API, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, website: form.website.value, page: location.pathname, source: qs.get("utm_source") || qs.get("ref") || "" }),
+            body: JSON.stringify({ name, email, website: form.website.value, page: location.pathname, ...attribution() }),
           });
           const body = await res.json().catch(() => ({}));
           if (!res.ok) throw new Error(body.error || "Something went wrong");
+          bt("contact_sent");
           form.classList.add("is-sent");
           form.innerHTML = `<div class="sent"><h3>Thanks, ${name.split(" ")[0].replace(/[<>&"]/g, "")}.</h3><p>We'll be in touch soon at <b></b>.</p></div>`;
           form.querySelector("b").textContent = email;
@@ -270,5 +278,6 @@
     </script>
     <!-- Counts clicks from Butter Tapes emails (?bt=…) and removes the tag from the address bar. -->
     <script src="https://app.buttertapes.com/track.js" defer></script>
-  </body>
+  <!-- Cloudflare Web Analytics (page views; no cookies) --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c99b1e9b2c4421ab5ba908590bfdfd3"}'></script>
+</body>
 </html>
