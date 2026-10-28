@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Butter Tapes</title>
+  <rect width="64" height="64" rx="14" fill="#f2c641"/>
+  <!-- The tape turned to face right (reels stacked, opening on the right), so it reads like a B. -->
+  <g transform="translate(0 -3) rotate(-90 32 35)">
+    <rect x="9" y="17" width="46" height="24" rx="12" fill="#2a2306"/>
+    <circle cx="21" cy="29" r="7" fill="#f2c641"/>
+    <circle cx="43" cy="29" r="7" fill="#f2c641"/>
+    <circle cx="21" cy="29" r="2.6" fill="#2a2306"/>
+    <circle cx="43" cy="29" r="2.6" fill="#2a2306"/>
+    <path d="M19 53 L23.5 45 H40.5 L45 53 Z" fill="#2a2306"/>
+  </g>
+</svg>
