@@ -240,7 +240,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
           <div class="cta-top-headline" id="ctaTopHeadline"></div>
           <div class="cta-top-body">Book a free 30-minute call. Bede will go through your results with you and tell you exactly where you'd start.</div>
         </div>
-        <a class="cta-top-btn" href="https://calendly.com/bede-smith1999/inhabitedacting" target="_blank">Book a Free Call &rarr;</a>
+        <a class="cta-top-btn" href="https://calendly.com/bede-smith1999/inhabitedacting" target="_blank" data-track="results_call_top">Book a Free Call &rarr;</a>
       </div>
     </div>
     <div class="areas-grid" id="areasGrid"></div>
@@ -262,7 +262,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
       <div class="cta-bottom-badge">Free · 30 min · No pressure</div>
       <h3>Book a free call with Bede.</h3>
       <p>He will go through your results with you and tell you exactly where you would start in the studio — what to work on first, and what the path forward looks like.</p>
-      <a class="cta-bottom-btn" href="https://calendly.com/bede-smith1999/inhabitedacting" target="_blank">Book Your Free Call &rarr;</a>
+      <a class="cta-bottom-btn" href="https://calendly.com/bede-smith1999/inhabitedacting" target="_blank" data-track="results_call_bottom">Book Your Free Call &rarr;</a>
       <div class="cta-bottom-sub">No commitment. No pitch. Just a clear picture of where you are and where to go next.</div>
     </div>
     <span class="restart" onclick="restart()">Take the assessment again</span>
@@ -307,11 +307,36 @@ function rememberResult(patch, fresh) {
 function showLastResults() {
   var r = lastResult();
   if (!r) return;
+  bt('results_return', String(Math.max(0, Math.floor((Date.now() - (r.at || Date.now())) / 864e5))));
   answers = r.answers;
   showResults(r);
 }
 var btStarted = false;
 function btStart(e) { if (!btStarted) { btStarted = true; bt(e); } }
+// Drop-off: the first answer in each section reports "reached section N" once per checkup.
+var btSections = {};
+function btSection(key) {
+  var n = String(parseInt(key, 10) + 1);
+  if (!btSections[n]) { btSections[n] = true; bt('checkup_section', n); }
+}
+// Results page: which parts came on screen (save form, area bars, focus list, bottom call block), once each.
+var resultsObserver = null;
+function watchResults() {
+  if (resultsObserver) resultsObserver.disconnect();
+  if (!('IntersectionObserver' in window)) return;
+  var parts = [['.email-block', 'save'], ['#areasGrid', 'areas'], ['.next-block', 'focus'], ['.cta-block-bottom', 'bottom']];
+  var seen = {};
+  resultsObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      var label = en.target.getAttribute('data-part');
+      if (en.isIntersecting && !seen[label]) { seen[label] = true; bt('results_view', label); resultsObserver.unobserve(en.target); }
+    });
+  }, { threshold: 0.4 });
+  parts.forEach(function (p) {
+    var n = document.querySelector('#s2 ' + p[0]);
+    if (n) { n.setAttribute('data-part', p[1]); resultsObserver.observe(n); }
+  });
+}
 
 // Pre-fill details they gave before on this device.
 (function () {
@@ -525,7 +550,7 @@ function renderQuestions() {
 }
 
 function handleSlider(event, key) {
-  btStart('checkup_start');
+  btStart('checkup_start'); btSection(key);
   var val = parseInt(event.target.value);
   var prev = answers[key] || { invert: false, milestones: [] };
   // Always preserve invert and milestones from initial setup
@@ -557,7 +582,7 @@ function pickMilestone(key, mi) {
 }
 
 function setYN(key, val) {
-  btStart('checkup_start');
+  btStart('checkup_start'); btSection(key);
   answers[key] = { type: 'yn', val: val };
   ['yes','unsure','no'].forEach(function(v) {
     var b = document.getElementById('yn_' + key + '_' + v);
@@ -719,13 +744,15 @@ function showResults(restored) {
     document.getElementById('lsBody').textContent = 'Everyone starts somewhere — see exactly what Level 1 (Foundation) covers and what "ready" looks like, so you know what you\'re working toward from day one.';
     document.getElementById('lsButton').textContent = 'See What Level 1 Covers →';
     document.getElementById('lsButton').href = OVERVIEW_URL;
+    document.getElementById('lsButton').setAttribute('data-track', 'results_overview');
     document.getElementById('lsSecondary').innerHTML = '';
   } else {
     document.getElementById('lsTitle').textContent = 'Ready to check Level ' + recommendedLevel + ' in detail?';
     document.getElementById('lsBody').textContent = 'This result points to Level ' + recommendedLevel + ' (' + info.label + '). If you\'re an enrolled student, the Level Survey gives you a full breakdown against the actual graduation criteria for that level.';
     document.getElementById('lsButton').textContent = 'Check My Detailed Progress →';
     document.getElementById('lsButton').href = GROUP_SURVEY_URL + '?group=' + recommendedLevel;
-    document.getElementById('lsSecondary').innerHTML = '<a href="' + OVERVIEW_URL + '" target="_blank" style="color:rgba(255,255,255,0.65);font-size:13px;text-decoration:underline;">Not sure what Level ' + recommendedLevel + ' actually involves? See what it covers first.</a>';
+    document.getElementById('lsButton').setAttribute('data-track', 'results_level_survey');
+    document.getElementById('lsSecondary').innerHTML = '<a href="' + OVERVIEW_URL + '" target="_blank" data-track="results_overview" style="color:rgba(255,255,255,0.65);font-size:13px;text-decoration:underline;">Not sure what Level ' + recommendedLevel + ' actually involves? See what it covers first.</a>';
   }
   linkBlock.style.display = 'flex';
 
@@ -738,6 +765,7 @@ function showResults(restored) {
   }
 
   showScreen('s2');
+  watchResults();
 }
 
 function submitEmail() {
@@ -790,10 +818,13 @@ function resetEmailBlock() {
   document.querySelector('.email-block').style.display = 'block';
   var ok = document.getElementById('emailSuccess'); ok.style.display = 'none'; ok.textContent = 'Done — check your inbox. You can still book a call any time below.';
 }
-function skipEmail() { document.querySelector('.email-block').style.display = 'none'; }
+function skipEmail() { bt('cta_click', 'results_no_thanks'); document.querySelector('.email-block').style.display = 'none'; }
 function showScreen(id) { document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); }); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
 // Starts a new checkup. The previous results stay on this device until the new ones replace them.
 function restart() {
+  bt('checkup_retake');
+  btStarted = false; btSections = {};
+  if (resultsObserver) resultsObserver.disconnect();
   answers = {}; savedAttempt = null; lastSave = null;
   resetEmailBlock();
   document.getElementById('lastResultsBtn').style.display = lastResult() ? '' : 'none';
