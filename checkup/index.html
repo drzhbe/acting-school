@@ -122,9 +122,11 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
 .focus-list li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #F0F0E8;font-size:14px;color:var(--mid);line-height:1.5;}
 .focus-list li::before{content:'--';color:var(--gold);flex-shrink:0;margin-top:1px;}
 .email-block{background:#FFFDF5;border:1px solid #E8E8E0;border-left:3px solid var(--gold);border-radius:3px;padding:28px 32px;margin-bottom:32px;}
-.email-block-eyebrow{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--lighter);font-weight:600;margin-bottom:8px;}
-.email-block h3{font-family:'DM Serif Display',serif;font-size:18px;color:var(--mid);margin-bottom:8px;}
-.email-block p{font-size:13px;color:var(--lighter);line-height:1.6;margin-bottom:16px;}
+.email-block-eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;}
+.email-block h3{font-family:'DM Serif Display',serif;font-size:24px;color:var(--dark);margin-bottom:8px;font-weight:400;}
+.restored-note{font-size:13px;color:var(--light);margin:0 0 14px;}
+.restored-note a{color:var(--gold);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.email-block p{font-size:14px;color:var(--light);line-height:1.6;margin-bottom:16px;}
 .email-form{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .email-input{flex:1;min-width:200px;padding:11px 14px;border:1.5px solid #E0E0D8;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mid);background:#fff;}
 .email-input:focus{outline:none;border-color:var(--gold);}
@@ -178,6 +180,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
     </div>
     <div class="nav-buttons" style="border:none;padding:0;margin:0;">
       <button class="btn-primary" onclick="startDiag()">Begin Assessment &rarr;</button>
+      <button class="btn-secondary" id="lastResultsBtn" style="display:none;" onclick="showLastResults()">See My Last Results</button>
     </div>
   </div>
 
@@ -197,6 +200,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
   </div>
 
   <div class="screen" id="s2">
+    <p class="restored-note" id="restoredNote" style="display:none;"></p>
     <div class="result-banner">
       <div class="result-eyebrow">Your current level</div>
       <div class="result-level" id="rLevel"></div>
@@ -205,6 +209,29 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
         <div class="result-pct" id="rPct"></div>
         <div class="result-pct-label">of skills<br>currently strong</div>
       </div>
+    </div>
+    <div class="email-block">
+      <div class="email-block-eyebrow">Don't lose your results</div>
+      <h3>Save your results.</h3>
+      <p>Enter your email and we will send you a copy to keep, so you can compare next time. We will also let you know when new intakes open — no pressure, no pitch.</p>
+      <div class="email-form">
+        <input type="email" class="email-input" id="emailInput" placeholder="you@email.com">
+        <input type="text" class="email-input" id="nameInput" placeholder="Your name (optional)" style="max-width:200px;">
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="wantsNews" checked>
+        <label for="wantsNews">Email me my results and let me know when new intakes open</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="wantsOnboarding">
+        <label for="wantsOnboarding">I would like Bede to reach out and set up a call</label>
+      </div>
+      <button class="btn-email" id="emailBtn" onclick="submitEmail()">Send My Results</button>
+      <div class="email-error" id="emailError"></div>
+      <div style="margin-top:14px;">
+        <span class="email-skip" onclick="skipEmail()">No thanks — I will keep my results here</span>
+      </div>
+      <div class="email-success" id="emailSuccess">Done — check your inbox. You can still book a call any time below.</div>
     </div>
     <div class="cta-top" id="ctaTop" style="display:none;">
       <div class="cta-top-inner">
@@ -230,29 +257,6 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--go
       <h3 id="nlTitle"></h3>
       <p id="nlBody"></p>
       <ul class="focus-list" id="focusList"></ul>
-    </div>
-    <div class="email-block">
-      <div class="email-block-eyebrow">Not ready to book yet?</div>
-      <h3>Save your results.</h3>
-      <p>Enter your email and we will send you a copy to keep. We will also let you know when new intakes open — no pressure, no pitch.</p>
-      <div class="email-form">
-        <input type="email" class="email-input" id="emailInput" placeholder="you@email.com">
-        <input type="text" class="email-input" id="nameInput" placeholder="Your name (optional)" style="max-width:200px;">
-      </div>
-      <div class="checkbox-row">
-        <input type="checkbox" id="wantsNews" checked>
-        <label for="wantsNews">Email me my results and let me know when new intakes open</label>
-      </div>
-      <div class="checkbox-row">
-        <input type="checkbox" id="wantsOnboarding">
-        <label for="wantsOnboarding">I would like Bede to reach out and set up a call</label>
-      </div>
-      <button class="btn-email" id="emailBtn" onclick="submitEmail()">Send My Results</button>
-      <div class="email-error" id="emailError"></div>
-      <div style="margin-top:14px;">
-        <span class="email-skip" onclick="skipEmail()">No thanks — I will keep my results here</span>
-      </div>
-      <div class="email-success" id="emailSuccess">Done — check your inbox. You can still book a call any time below.</div>
     </div>
     <div class="cta-block-bottom">
       <div class="cta-bottom-badge">Free · 30 min · No pressure</div>
@@ -283,6 +287,29 @@ function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 // Funnel steps, reported through track.js (see app.buttertapes.com/track.js). Calls before it loads are queued.
 function bt(e, l, id) { if (window.btTrack) btTrack(e, l, id); else (window.btq = window.btq || []).push([e, l, id]); }
 function attr() { var a = window.btAttr ? btAttr() : {}; return { source: a.source || stored('checkup_source'), medium: a.medium || '', campaign: a.campaign || '', visitor: a.visitor || '' }; }
+// The last results are kept on this device, so coming back to the page (after the Level Survey, a refresh,
+// or days later) shows them again instead of the intro. Dropped if the questions change.
+var RESULT_KEY = 'checkup_result';
+function questionsShape() { return DOMAINS.map(function (d) { return d.questions.length; }).join('.'); }
+function lastResult() {
+  try {
+    var r = JSON.parse(localStorage.getItem(RESULT_KEY) || 'null');
+    return r && r.shape === questionsShape() && r.answers ? r : null;
+  } catch (e) { return null; }
+}
+function rememberResult(patch, fresh) {
+  try {
+    var r = fresh ? {} : (JSON.parse(localStorage.getItem(RESULT_KEY) || 'null') || {});
+    for (var k in patch) r[k] = patch[k];
+    localStorage.setItem(RESULT_KEY, JSON.stringify(r));
+  } catch (e) {}
+}
+function showLastResults() {
+  var r = lastResult();
+  if (!r) return;
+  answers = r.answers;
+  showResults(r);
+}
 var btStarted = false;
 function btStart(e) { if (!btStarted) { btStarted = true; bt(e); } }
 
@@ -562,7 +589,8 @@ function scoreAnswer(ans, q) {
   }
 }
 
-function showResults() {
+function showResults(restored) {
+  restored = restored && restored.answers ? restored : null;
   var domainScores = [];
   var focusItems = [];
   DOMAINS.forEach(function(domain, di) {
@@ -656,9 +684,31 @@ function showResults() {
       domainScores: domainScores.map(function (d) { return { name: d.name, level: d.level, pct: d.total > 0 ? Math.round((d.score / d.total) * 100) : 0 }; })
     }
   };
-  savedAttempt = api(lastSave);
-  savedAttempt.catch(function (e) { console.warn('Checkup not saved:', e); });
-  savedAttempt.then(function (s) { bt('checkup_finish', info.label, s.id); }, function () {});
+  if (restored && restored.id) {
+    // Shown again from this device: already in the database, don't save a second copy.
+    savedAttempt = Promise.resolve({ id: restored.id });
+  } else {
+    if (!restored) rememberResult({ shape: questionsShape(), at: Date.now(), answers: answers }, true);
+    savedAttempt = api(lastSave);
+    savedAttempt.catch(function (e) { console.warn('Checkup not saved:', e); });
+    savedAttempt.then(function (s) {
+      rememberResult({ id: s.id });
+      if (!restored) bt('checkup_finish', info.label, s.id);
+    }, function () {});
+  }
+
+  var note = document.getElementById('restoredNote');
+  if (restored) {
+    note.innerHTML = 'Your results from ' + new Date(restored.at || Date.now()).toLocaleDateString('en-AU', { day: 'numeric', month: 'long' }) +
+      ', saved on this device. <a onclick="restart()">Take it again</a>';
+    note.style.display = 'block';
+  } else note.style.display = 'none';
+  resetEmailBlock();
+  if (restored && restored.emailed) {
+    hideEmailForm();
+    document.getElementById('emailSuccess').textContent = 'Saved — we emailed a copy to ' + restored.emailed + '.';
+    showEmailSuccess();
+  }
 
   var recommendedLevel = GROUP_LEVEL_MAP[cur] || 1;
   var isEarlyDays = (cur === 0);
@@ -712,10 +762,9 @@ function submitEmail() {
     })
     .then(function () {
       store('checkup_email', email); if (name) store('checkup_name', name);
+      rememberResult({ emailed: email });
       bt('email_left', wantsOnboarding ? 'wants_call' : '');
-      document.querySelector('.email-form').style.display = 'none';
-      document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = 'none'; });
-      btn.style.display = 'none';
+      hideEmailForm();
       showEmailSuccess();
     })
     .catch(function (e) {
@@ -726,9 +775,38 @@ function submitEmail() {
 }
 
 function showEmailSuccess() { document.getElementById('emailSuccess').style.display = 'block'; }
+function hideEmailForm() {
+  document.querySelector('.email-form').style.display = 'none';
+  document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = 'none'; });
+  document.getElementById('emailBtn').style.display = 'none';
+  document.querySelector('.email-skip').parentNode.style.display = 'none';
+}
+function resetEmailBlock() {
+  document.querySelector('.email-form').style.display = '';
+  document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = ''; });
+  var b = document.getElementById('emailBtn'); b.style.display = ''; b.disabled = false; b.textContent = 'Send My Results';
+  document.querySelector('.email-skip').parentNode.style.display = '';
+  document.getElementById('emailError').style.display = 'none';
+  document.querySelector('.email-block').style.display = 'block';
+  var ok = document.getElementById('emailSuccess'); ok.style.display = 'none'; ok.textContent = 'Done — check your inbox. You can still book a call any time below.';
+}
 function skipEmail() { document.querySelector('.email-block').style.display = 'none'; }
 function showScreen(id) { document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); }); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
-function restart() { answers = {}; savedAttempt = null; lastSave = null; document.querySelector('.email-form').style.display = ''; document.querySelectorAll('.email-block .checkbox-row').forEach(function (r) { r.style.display = ''; }); var b = document.getElementById('emailBtn'); b.style.display = ''; b.disabled = false; b.textContent = 'Send My Results'; document.getElementById('emailError').style.display = 'none'; document.querySelector('.email-block').style.display = 'block'; document.getElementById('emailSuccess').style.display = 'none'; document.getElementById('emailInput').value = ''; document.getElementById('nameInput').value = ''; showScreen('s0'); }
+// Starts a new checkup. The previous results stay on this device until the new ones replace them.
+function restart() {
+  answers = {}; savedAttempt = null; lastSave = null;
+  resetEmailBlock();
+  document.getElementById('lastResultsBtn').style.display = lastResult() ? '' : 'none';
+  showScreen('s0');
+}
+
+// Coming back to the page: show the last results straight away (unless ?retake), or offer them on the intro.
+(function () {
+  var r = lastResult();
+  if (!r) return;
+  document.getElementById('lastResultsBtn').style.display = '';
+  if (!/[?&]retake\b/.test(location.search)) showLastResults();
+})();
 </script>
 <!-- Cloudflare Web Analytics (page views; no cookies) --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0c99b1e9b2c4421ab5ba908590bfdfd3"}'></script>
 </body>
